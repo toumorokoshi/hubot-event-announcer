@@ -15,8 +15,11 @@
 #   tombell
 
 module.exports = (robot) ->
-  robot.respond /filter/, (msg) ->
-    msg.reply "filter what?"
 
-  robot.hear /pweez/, ->
-    msg.send "no"
+  subscriptions = (ev, partial = false) ->
+    subs = robot.brain.data.subcriptions ||= {}
+
+  robot.respond /subscribe (.*)/i/, (msg) ->
+    evMatch = msg.match[1]
+    listener = msg.message.user.reply_to || msg.message.user.room
+    msg.send "subscribed #{listener} to #{evMatch}"
