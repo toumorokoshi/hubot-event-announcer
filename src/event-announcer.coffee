@@ -30,12 +30,15 @@ module.exports = (robot) ->
     for listener, eventMatches of subs
       for eventMatch in eventMatches
         if eventName.lastIndexOf eventName != -1
-          robot.send listener, message
+          robot.send listener, "#{eventName}: #{message}"
 
   getListener = (msg) ->
     msg.message.user.reply_to || msg.message.user.room
 
-  robot.respond /publish (\S+) (.*)/i, (msg)->
+  robot.on "ea-event", (event) ->
+    publishEvent event.name, event.message
+
+  robot.respond /publish (\S+) (.*)/i, (msg) ->
     eventName = msg.match[1]
     message = msg.match[2]
     publishEvent eventName, message
