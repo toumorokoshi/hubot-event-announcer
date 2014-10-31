@@ -38,7 +38,7 @@ module.exports = (robot) ->
   robot.on "ea-event", (event) ->
     publishEvent event.name, event.message
 
-  robot.respond /publish (\S+) (.*)/i, (msg) ->
+  robot.respond /pub (\S+) (.*)/i, (msg) ->
     eventName = msg.match[1]
     message = msg.match[2]
     publishEvent eventName, message
@@ -56,3 +56,7 @@ module.exports = (robot) ->
       msg.send "#{listener} is listening to: #{subs[listener]}"
     else
       msg.send "No subs for #{listener}"
+
+  robot.respond /show all subs/i, (msg) ->
+    for listener, eventMatches of getSubscription
+      msg.send "#{listener} is listening to: #{eventMatches}"
