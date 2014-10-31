@@ -1,8 +1,8 @@
 {
-  "name": "hubot-example",
-  "description": "An example script package for Hubot",
+  "name": "hubot-event-announcer",
+  "description": "An event announcement untility for hubot",
   "version": "1.0.0",
-  "author": "Tom Bell <tomb@tomb.io>",
+  "author": "Yusuke Tsutsumi <tsutsumi.yusuke@gmail.com>",
   "license": "MIT",
 
   "keywords": [
@@ -12,11 +12,11 @@
 
   "repository": {
     "type": "git",
-    "url": "git://github.com/hubot-scripts/hubot-example.git"
+    "url": "git://github.com/toumorokoshi/hubot-event-announcer.git"
   },
 
   "bugs": {
-    "url": "https://github.com/hubot-scripts/hubot-example/issues"
+    "url": "git://github.com/toumorokoshi/hubot-event-announcer/issues"
   },
 
   "dependencies": {
