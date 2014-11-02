@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+# you must run npm install first
+
+NODE_DIRECTORY=./node_modules/.bin
+
+$NODE_DIRECTORY/mocha --compilers coffee:coffee-script test/

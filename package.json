@@ -24,9 +24,12 @@
   },
 
   "devDependencies": {
-    "hubot": "*",
-    "mocha": "*",
     "chai": "*",
+    "hubot": "*",
+    "hubot-mock-adapter": "*",
+    "jasmine": "*",
+    "jasmine-node": "*",
+    "mocha": "*",
     "sinon-chai": "*",
     "sinon": "*"
   },

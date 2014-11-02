@@ -25,6 +25,13 @@ module.exports = (robot) ->
     subs[listener].push eventMatch
     robot.brain.save()
 
+  removeSubscription = (listener, eventMatch) ->
+    subs = getSubscription
+    matches = subs[listener] || []
+    eventIndex = matches.indexOf(eventMatch)
+    if eventIndex > -1
+      matches.splice(eventIndex)
+
   publishEvent = (eventName, message) ->
     subs = getSubscription
     for listener, eventMatches of subs
@@ -49,13 +56,19 @@ module.exports = (robot) ->
     pushSubscription listener, eventMatch
     msg.send "subscribed #{listener} to #{eventMatch}"
 
+  robot.respond /unsub (.*)/i, (msg) ->
+    eventMatch = msg.match[1]
+    listener = getListener msg
+    removeSubscription listener, eventMatch
+    msg.send "unsubscribed #{listener} from #{eventMatch}"
+
   robot.respond /show my subs/i, (msg) ->
     listener = getListener msg
     subs = getSubscription
-    if listener of subs
+    if listener of subs and subs[listener].length > 0
       msg.send "#{listener} is listening to: #{subs[listener]}"
     else
-      msg.send "No subs for #{listener}"
+      msg.send "no subs for #{listener}"
 
   robot.respond /show all subs/i, (msg) ->
     for listener, eventMatches of getSubscription
