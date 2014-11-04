@@ -36,7 +36,7 @@ module.exports = (robot) ->
     subs = getSubscription
     for listener, eventMatches of subs
       for eventMatch in eventMatches
-        if eventName.lastIndexOf eventMatch != -1
+        if eventName.lastIndexOf(eventMatch) != -1
           robot.send listener, "#{eventName}: #{message}"
 
   getListener = (msg) ->
