@@ -17,12 +17,13 @@
 module.exports = (robot) ->
 
   getSubscription = () ->
-    robot.brain.data.subscriptions ||= {}
+    robot.brain.get('event-announcer:subs') or {}
 
   pushSubscription = (listener, eventMatch) ->
     subs = getSubscription
     subs[listener] ||= []
     subs[listener].push eventMatch
+    robot.brain.set 'event-announcer:subs', subs
     robot.brain.save()
 
   removeSubscription = (listener, eventMatch) ->
@@ -37,7 +38,7 @@ module.exports = (robot) ->
     for listener, eventMatches of subs
       for eventMatch in eventMatches
         if eventName.lastIndexOf(eventMatch) != -1
-          robot.send listener, "#{eventName}: #{message}"
+          robot.send listener, "#{message}"
 
   getListener = (msg) ->
     msg.message.user.reply_to || msg.message.user.room

@@ -53,7 +53,7 @@ describe 'event-announcer', ->
     adapter.receive new TextMessage(user, "Hubot sub foo")
 
     adapter.on "send", (envelope, strings) ->
-      expect(strings[0]).match /foo: fooEvent/
+      expect(strings[0]).match /fooEvent/
       done()
 
     robot.emit "ea-event", { name: "foo", message: "fooEvent" }
