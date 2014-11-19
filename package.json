@@ -1,7 +1,7 @@
 {
   "name": "hubot-event-announcer",
   "description": "An event announcement untility for hubot",
-  "version": "0.1.4",
+  "version": "0.2.4",
   "author": "Yusuke Tsutsumi <tsutsumi.yusuke@gmail.com>",
   "license": "MIT",
 
@@ -20,7 +20,8 @@
   },
 
   "dependencies": {
-    "coffee-script": "~1.6"
+    "coffee-script": "~1.6",
+    "minimatch": "*"
   },
 
   "devDependencies": {

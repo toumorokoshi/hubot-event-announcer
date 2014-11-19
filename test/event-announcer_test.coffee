@@ -58,6 +58,26 @@ describe 'event-announcer', ->
 
     robot.emit "ea-event", { name: "foo", message: "fooEvent" }
 
+  it "when subscribed to '*', all events will be listened to.", (done) ->
+
+    adapter.receive new TextMessage(user, "Hubot sub foo")
+
+    adapter.on "send", (envelope, strings) ->
+      expect(strings[0]).match /fooEvent/
+      done()
+
+    robot.emit "ea-event", { name: "foo", message: "fooEvent" }
+
+  it "when subscribed to 'foo*bar', will match a glob.", (done) ->
+
+    adapter.receive new TextMessage(user, "Hubot sub foo")
+
+    adapter.on "send", (envelope, strings) ->
+      expect(strings[0]).match /fooEvent/
+      done()
+
+    robot.emit "ea-event", { name: "foo-rand-bar", message: "fooEvent" }
+
   it 'unsubscribers should report an unsubscription', (done) ->
 
     adapter.receive new TextMessage(user, "Hubot sub foo")

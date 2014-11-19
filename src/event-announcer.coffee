@@ -8,11 +8,15 @@
 #   None
 #
 # Commands:
-#   hubot hello - "hello!"
-#   hubot orly - "yarly"
+#   Hubot sub <event> - subscribe the room or user to an event with name <event> (an event matches as a substring or a glob)
+#   Hubot unsub <event> - unsubscribe the room or user from an event
+#   Hubot show my subs - show the subs for the current group or user
+#   Hubot show all subs - show all subs hubot has registered
 #
 # Author:
 #   tombell
+
+minimatch = require('minimatch')
 
 module.exports = (robot) ->
 
@@ -32,13 +36,15 @@ module.exports = (robot) ->
     eventIndex = matches.indexOf(eventMatch)
     if eventIndex > -1
       matches.splice(eventIndex)
+    robot.brain.set 'eventannouncer:subs', subs
+    robot.brain.save()
 
   publishEvent = (eventName, message) ->
     subs = getSubscription()
     for listener, eventMatches of subs
       for eventMatch in eventMatches
-        if eventName.lastIndexOf(eventMatch) != -1
-          robot.send listener, "#{message}"
+        if eventName.lastIndexOf(eventMatch) != -1 or minimatch(eventName, eventMatch)
+          robot.send listener, "#{eventName}: #{message}"
 
   getListener = (msg) ->
     msg.message.user.reply_to || msg.message.user.room
